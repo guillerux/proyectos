@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlusPagos · Estamos cerca tuyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pp-navy:#0B3B8F;
+    --pp-navy-dark:#082C6D;
+    --pp-navy-tint:#F2F6FF;
+    --pp-navy-tint-2:#E8EEFF;
+    --pp-bg:#F5F5F5;
+    --pp-card:#FFFFFF;
+    --pp-field:#F2F2F3;
+    --pp-field-hover:#EBEBEC;
+    --pp-border:#E3E3E5;
+    --pp-text:#15161A;
+    --pp-text-soft:#6E7180;
+    --pp-placeholder:#9A9CA6;
+    --pp-error:#D64545;
+    --pp-radius-lg:20px;
+    --pp-radius-md:12px;
+    --pp-radius-sm:8px;
+    --shadow-card:0 20px 45px -20px rgba(11,59,143,0.18), 0 2px 8px rgba(15,15,20,0.04);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background:var(--pp-bg);
+    color:var(--pp-text);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px 48px;
+    background:var(--pp-bg);
+  }
+  nav.mainnav{
+    display:flex;
+    align-items:center;
+    gap:36px;
+  }
+  .navlink{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--pp-text);
+    cursor:default;
+    white-space:nowrap;
+  }
+  .navlink svg{opacity:0.55;}
+  .navlinks-desktop{display:flex; align-items:center; gap:36px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    text-align:center;
+    padding:56px 20px 8px;
+  }
+  .hero h1{
+    font-size:44px;
+    font-weight:800;
+    letter-spacing:-0.03em;
+    margin:0 0 12px;
+  }
+  .hero p{
+    margin:0;
+    color:var(--pp-text-soft);
+    font-size:15.5px;
+    font-weight:500;
+  }
+
+  /* ---------- Card / Form ---------- */
+  .stage{
+    display:flex;
+    justify-content:center;
+    padding:36px 20px 90px;
+  }
+  .card{
+    background:var(--pp-card);
+    width:100%;
+    max-width:624px;
+    border-radius:var(--pp-radius-lg);
+    padding:28px 28px 32px;
+    box-shadow:var(--shadow-card);
+    position:relative;
+    overflow:visible;
+  }
+
+  .field-group{margin-bottom:30px;}
+  .field-group:last-of-type{margin-bottom:0;}
+  .field-label{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    color:var(--pp-text);
+    margin-bottom:10px;
+  }
+
+  /* Radio pill group */
+  .radio-row{display:flex; gap:10px;}
+  .radio-pill{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border:1.5px solid var(--pp-border);
+    background:#fff;
+    border-radius:var(--pp-radius-md);
+    padding:12px 12px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+    user-select:none;
+  }
+  .radio-pill:hover{border-color:#c7cbe0;}
+  .radio-pill.selected{
+    border-color:var(--pp-navy);
+    background:var(--pp-navy-tint);
+  }
+  .radio-dot{
+    width:17px; height:17px;
+    border-radius:50%;
+    border:1.5px solid #C6C8D2;
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .15s ease;
+  }
+  .radio-pill.selected .radio-dot{border-color:var(--pp-navy);}
+  .radio-dot::after{
+    content:'';
+    width:8.5px;height:8.5px;
+    border-radius:50%;
+    background:var(--pp-navy);
+    transform:scale(0);
+    transition:transform .12s ease;
+  }
+  .radio-pill.selected .radio-dot::after{transform:scale(1);}
+  .radio-pill span.label-text{
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--pp-text-soft);
+  }
+  .radio-pill.selected span.label-text{color:var(--pp-navy); font-weight:700;}
+
+  /* Custom select */
+  .select-wrap{position:relative;}
+  .select-box{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--pp-field);
+    border:1.5px solid transparent;
+    border-radius:var(--pp-radius-md);
+    padding:13px 14px;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .select-box:hover{background:var(--pp-field-hover);}
+  .select-box.open{
+    background:#fff;
+    border-color:var(--pp-navy);
+  }
+  .select-box.error{border-color:var(--pp-error);}
+  .select-box .value{
+    font-size:14px;
+    font-weight:500;
+    color:var(--pp-placeholder);
+  }
+  .select-box .value.filled{color:var(--pp-text); font-weight:600;}
+  .chev{
+    transition:transform .18s ease;
+    flex-shrink:0;
+    color:#8A8D99;
+  }
+  .select-box.open .chev{transform:rotate(180deg); color:var(--pp-navy);}
+
+  .options-panel{
+    position:absolute;
+    top:calc(100% + 8px);
+    left:0; right:0;
+    background:var(--pp-field);
+    border:1px solid var(--pp-border);
+    border-radius:var(--pp-radius-md);
+    padding:6px;
+    z-index:30;
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    pointer-events:none;
+    transform:translateY(-4px);
+    transition:max-height .18s ease, opacity .15s ease, transform .15s ease;
+    box-shadow:0 12px 24px -12px rgba(15,15,20,0.18);
+  }
+  .options-panel.open{
+    max-height:320px;
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+    overflow-y:auto;
+  }
+  .option-item{
+    padding:10px 12px;
+    font-size:14px;
+    font-weight:500;
+    color:var(--pp-text);
+    border-radius:8px;
+    cursor:pointer;
+    transition:background .12s ease;
+  }
+  .option-item:hover{background:var(--pp-navy-tint-2);}
+  .option-item.active{background:var(--pp-navy-tint); color:var(--pp-navy); font-weight:700;}
+
+  /* Checkboxes */
+  .check-grid{
+    display:grid;
+    grid-template-columns:repeat(4, auto);
+    row-gap:12px;
+    column-gap:18px;
+  }
+  .check-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    user-select:none;
+    flex:0 0 auto;
+  }
+  .check-box{
+    width:17px; height:17px;
+    border-radius:5px;
+    border:1.5px solid #C6C8D2;
+    background:#fff;
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  .check-item.checked .check-box{
+    background:var(--pp-navy);
+    border-color:var(--pp-navy);
+  }
+  .check-box svg{opacity:0; transform:scale(.5); transition:opacity .1s ease, transform .1s ease;}
+  .check-item.checked .check-box svg{opacity:1; transform:scale(1);}
+  .check-item span.label-text{
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--pp-text);
+  }
+
+  /* Text inputs */
+  .input-row{
+    display:flex;
+    gap:14px;
+  }
+  .input-col{flex:1; min-width:0;}
+  .text-input{
+    width:100%;
+    background:var(--pp-field);
+    border:1.5px solid transparent;
+    border-radius:var(--pp-radius-md);
+    padding:13px 14px;
+    font-family:inherit;
+    font-size:14px;
+    font-weight:500;
+    color:var(--pp-text);
+    outline:none;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .text-input::placeholder{color:var(--pp-placeholder); font-weight:500;}
+  .text-input:focus{background:#fff; border-color:var(--pp-navy);}
+  .text-input.error{border-color:var(--pp-error);}
+
+  .error-msg{
+    font-size:12px;
+    color:var(--pp-error);
+    font-weight:600;
+    margin-top:6px;
+    display:none;
+  }
+  .error-msg.show{display:block;}
+
+  /* Submit */
+  .submit-row{
+    display:flex;
+    justify-content:center;
+    margin-top:26px;
+  }
+  .submit-btn{
+    background:var(--pp-navy);
+    color:#fff;
+    border:none;
+    padding:14px 44px;
+    border-radius:999px;
+    font-family:inherit;
+    font-size:14.5px;
+    font-weight:700;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease, box-shadow .15s ease;
+    box-shadow:0 10px 20px -8px rgba(11,59,143,0.45);
+  }
+  .submit-btn:hover{background:var(--pp-navy-dark); transform:translateY(-1px);}
+  .submit-btn:active{transform:translateY(0);}
+  .submit-btn.loading{opacity:.75; cursor:default; pointer-events:none;}
+
+  .shake{animation:shake .35s ease;}
+  @keyframes shake{
+    10%,90%{transform:translateX(-1px);}
+    20%,80%{transform:translateX(2px);}
+    30%,50%,70%{transform:translateX(-4px);}
+    40%,60%{transform:translateX(4px);}
+  }
+
+  /* Success state */
+  .success-view{
+    display:none;
+    text-align:center;
+    padding:14px 6px 6px;
+  }
+  .success-view.show{display:block; animation:fadeUp .35s ease;}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  .success-icon{
+    width:64px; height:64px;
+    border-radius:50%;
+    background:var(--pp-navy-tint);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 20px;
+  }
+  .success-view h2{
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 10px;
+    letter-spacing:-0.02em;
+  }
+  .success-view p{
+    font-size:14px;
+    color:var(--pp-text-soft);
+    line-height:1.55;
+    margin:0 0 6px;
+  }
+  .success-summary{
+    text-align:left;
+    background:var(--pp-field);
+    border-radius:var(--pp-radius-md);
+    padding:16px 18px;
+    margin:20px 0 24px;
+  }
+  .success-summary .row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:6px 0;
+    font-size:13px;
+  }
+  .success-summary .row + .row{border-top:1px solid var(--pp-border);}
+  .success-summary .k{color:var(--pp-text-soft); font-weight:500;}
+  .success-summary .v{color:var(--pp-text); font-weight:700; text-align:right;}
+  .reset-btn{
+    background:transparent;
+    border:1.5px solid var(--pp-navy);
+    color:var(--pp-navy);
+    padding:12px 28px;
+    border-radius:999px;
+    font-family:inherit;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .reset-btn:hover{background:var(--pp-navy-tint);}
+
+  @media (max-width:860px){
+    nav.mainnav{display:none;}
+    header{padding:16px 20px;}
+  }
+  @media (max-width:480px){
+    .hero h1{font-size:32px;}
+    .card{padding:22px 18px 26px;}
+    .input-row{flex-direction:column; gap:16px;}
+    .check-grid{column-gap:16px; grid-template-columns:repeat(2, auto);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+</header>
+
+<section class="hero">
+  <h1>Estamos cerca tuyo</h1>
+  <p>Dejanos tus datos y te responderemos a la brevedad.</p>
+</section>
+
+<section class="stage">
+  <div class="card">
+
+    <!-- ===== FORM VIEW ===== -->
+    <form id="ppForm" novalidate>
+
+      <div class="field-group">
+        <span class="field-label">¿Con qué necesitás ayuda?</span>
+        <div class="radio-row">
+          <div class="radio-pill" data-radio="consulta">
+            <div class="radio-dot"></div>
+            <span class="label-text">Quiero hacer una consulta</span>
+          </div>
+          <div class="radio-pill selected" data-radio="operar">
+            <div class="radio-dot"></div>
+            <span class="label-text">Quiero operar con PlusPagos</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">¿Qué servicio querés pedir?</span>
+        <div class="select-wrap" data-select="servicio">
+          <div class="select-box" tabindex="0">
+            <span class="value">Quiero...</span>
+            <svg class="chev" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="options-panel">
+            <div class="option-item">Registrar mi comercio</div>
+            <div class="option-item">Convertirme en agente de PlusPagos Servicios</div>
+            <div class="option-item">Gestionar la cobranza de mis servicios</div>
+          </div>
+          <div class="error-msg">Seleccioná una opción para continuar.</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">¿Cuál es tu actividad principal?</span>
+        <div class="select-wrap" data-select="actividad">
+          <div class="select-box" tabindex="0">
+            <span class="value">Mi actividad es...</span>
+            <svg class="chev" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="options-panel">
+            <div class="option-item">Almacén y Limpieza</div>
+            <div class="option-item">Estación de servicio</div>
+            <div class="option-item">Farmacia</div>
+            <div class="option-item">Juguetería</div>
+            <div class="option-item">Kiosco</div>
+            <div class="option-item">Librería</div>
+            <div class="option-item">Lotería</div>
+            <div class="option-item">Multirubro</div>
+            <div class="option-item">Supermercado</div>
+            <div class="option-item">Tecnología y Electro</div>
+            <div class="option-item">Otro</div>
+          </div>
+          <div class="error-msg">Seleccioná una opción para continuar.</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">¿Dónde está ubicado tu negocio?</span>
+        <div class="select-wrap" data-select="ubicacion">
+          <div class="select-box" tabindex="0">
+            <span class="value">Está en...</span>
+            <svg class="chev" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="options-panel">
+            <div class="option-item">Calle de barrio</div>
+            <div class="option-item">Galería</div>
+            <div class="option-item">Avenida o centro comercial</div>
+            <div class="option-item">Shopping</div>
+            <div class="option-item">Terminal de transporte</div>
+            <div class="option-item">Otra ubicación</div>
+          </div>
+          <div class="error-msg">Seleccioná una opción para continuar.</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">¿Qué servicios de cobranza tenés?</span>
+        <div class="check-grid" id="cobranzaGrid">
+          <label class="check-item" data-check="Rapipago"><div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.7 2.7L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="label-text">Rapipago</span></label>
+          <label class="check-item" data-check="Pago Fácil"><div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.7 2.7L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="label-text">Pago Fácil</span></label>
+          <label class="check-item" data-check="CobroExpress"><div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.7 2.7L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="label-text">CobroExpress</span></label>
+          <label class="check-item" data-check="Pronto Pago"><div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.7 2.7L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="label-text">Pronto Pago</span></label>
+          <label class="check-item" data-check="Multipagos"><div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.7 2.7L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="label-text">Multipagos</span></label>
+          <label class="check-item" data-check="Otro servicio"><div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.7 2.7L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="label-text">Otro servicio</span></label>
+          <label class="check-item" data-check="Ninguno"><div class="check-box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.7 2.7L9 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="label-text">Ninguno</span></label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">¿Cuándo te gustaría comenzar a operar?</span>
+        <div class="select-wrap" data-select="cuando">
+          <div class="select-box" tabindex="0">
+            <span class="value">Quisiera...</span>
+            <svg class="chev" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="options-panel">
+            <div class="option-item">Lo antes posible</div>
+            <div class="option-item">Dentro de los próximos 60 días</div>
+            <div class="option-item">Solo quiero conocer más sobre PlusPagos Servicios</div>
+          </div>
+          <div class="error-msg">Seleccioná una opción para continuar.</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="input-row">
+          <div class="input-col">
+            <span class="field-label">Celular</span>
+            <input class="text-input" id="celularInput" type="tel" placeholder="Ej.: 1112345678" inputmode="numeric">
+            <div class="error-msg">Ingresá un celular válido.</div>
+          </div>
+          <div class="input-col">
+            <span class="field-label">E-mail</span>
+            <input class="text-input" id="emailInput" type="email" placeholder="Ej: nombre@mail.com">
+            <div class="error-msg">Ingresá un e-mail válido.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" id="submitBtn">Enviar consulta</button>
+      </div>
+    </form>
+
+    <!-- ===== SUCCESS VIEW ===== -->
+    <div class="success-view" id="successView">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 7" stroke="#0B3B8F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2>¡Listo, recibimos tu consulta!</h2>
+      <p>Un asesor de PlusPagos se va a poner en contacto con vos a la brevedad.</p>
+
+      <div class="success-summary" id="summaryBox"></div>
+
+      <button class="reset-btn" id="resetBtn">Enviar otra consulta</button>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function(){
+  const form = document.getElementById('ppForm');
+
+  /* ---------- Radio pills ---------- */
+  const radios = document.querySelectorAll('.radio-pill');
+  radios.forEach(r=>{
+    r.addEventListener('click', ()=>{
+      radios.forEach(x=>x.classList.remove('selected'));
+      r.classList.add('selected');
+    });
+  });
+  function getRadioValue(){
+    const sel = document.querySelector('.radio-pill.selected');
+    return sel ? sel.querySelector('.label-text').textContent : '';
+  }
+
+  /* ---------- Custom selects ---------- */
+  const selectWraps = document.querySelectorAll('.select-wrap');
+
+  function closeAllSelects(except){
+    selectWraps.forEach(w=>{
+      if(w!==except){
+        w.querySelector('.select-box').classList.remove('open');
+        w.querySelector('.options-panel').classList.remove('open');
+      }
+    });
+  }
+
+  selectWraps.forEach(wrap=>{
+    const box = wrap.querySelector('.select-box');
+    const panel = wrap.querySelector('.options-panel');
+    const valueEl = wrap.querySelector('.value');
+    const options = wrap.querySelectorAll('.option-item');
+
+    box.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const isOpen = box.classList.contains('open');
+      closeAllSelects(wrap);
+      box.classList.toggle('open', !isOpen);
+      panel.classList.toggle('open', !isOpen);
+    });
+
+    options.forEach(opt=>{
+      opt.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        options.forEach(o=>o.classList.remove('active'));
+        opt.classList.add('active');
+        valueEl.textContent = opt.textContent;
+        valueEl.classList.add('filled');
+        box.classList.remove('open','error');
+        panel.classList.remove('open');
+        wrap.querySelector('.error-msg').classList.remove('show');
+      });
+    });
+  });
+
+  document.addEventListener('click', ()=>closeAllSelects(null));
+
+  function getSelectValue(name){
+    const wrap = document.querySelector('.select-wrap[data-select="'+name+'"]');
+    const v = wrap.querySelector('.value');
+    return v.classList.contains('filled') ? v.textContent : '';
+  }
+  function markSelectError(name, on){
+    const wrap = document.querySelector('.select-wrap[data-select="'+name+'"]');
+    wrap.querySelector('.select-box').classList.toggle('error', on);
+    wrap.querySelector('.error-msg').classList.toggle('show', on);
+  }
+
+  /* ---------- Checkboxes (Ninguno es excluyente) ---------- */
+  const checkItems = document.querySelectorAll('.check-item');
+  checkItems.forEach(item=>{
+    item.addEventListener('click', ()=>{
+      const isNone = item.dataset.check === 'Ninguno';
+      if(isNone){
+        const willCheck = !item.classList.contains('checked');
+        checkItems.forEach(c=>c.classList.remove('checked'));
+        if(willCheck) item.classList.add('checked');
+      } else {
+        item.classList.toggle('checked');
+        document.querySelector('.check-item[data-check="Ninguno"]').classList.remove('checked');
+      }
+    });
+  });
+  function getCobranza(){
+    return Array.from(document.querySelectorAll('.check-item.checked')).map(c=>c.dataset.check);
+  }
+
+  /* ---------- Inputs ---------- */
+  const celularInput = document.getElementById('celularInput');
+  const emailInput = document.getElementById('emailInput');
+
+  function markInputError(input, on){
+    input.classList.toggle('error', on);
+    input.parentElement.querySelector('.error-msg').classList.toggle('show', on);
+  }
+  [celularInput, emailInput].forEach(inp=>{
+    inp.addEventListener('input', ()=>markInputError(inp, false));
+  });
+
+  function isValidPhone(v){ return /^[0-9]{6,15}$/.test(v.trim()); }
+  function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+
+  /* ---------- Submit ---------- */
+  const submitBtn = document.getElementById('submitBtn');
+  const successView = document.getElementById('successView');
+  const summaryBox = document.getElementById('summaryBox');
+  const resetBtn = document.getElementById('resetBtn');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+    let firstInvalid = null;
+
+    ['servicio','actividad','ubicacion','cuando'].forEach(name=>{
+      const ok = !!getSelectValue(name);
+      markSelectError(name, !ok);
+      if(!ok && !firstInvalid) firstInvalid = document.querySelector('.select-wrap[data-select="'+name+'"]');
+      if(!ok) valid = false;
+    });
+
+    const phoneOk = isValidPhone(celularInput.value);
+    markInputError(celularInput, !phoneOk);
+    if(!phoneOk && !firstInvalid) firstInvalid = celularInput;
+    if(!phoneOk) valid = false;
+
+    const emailOk = isValidEmail(emailInput.value);
+    markInputError(emailInput, !emailOk);
+    if(!emailOk && !firstInvalid) firstInvalid = emailInput;
+    if(!emailOk) valid = false;
+
+    if(!valid){
+      submitBtn.classList.add('shake');
+      setTimeout(()=>submitBtn.classList.remove('shake'), 350);
+      if(firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    submitBtn.classList.add('loading');
+    submitBtn.textContent = 'Enviando...';
+
+    setTimeout(()=>{
+      const cobranza = getCobranza();
+      const rows = [
+        ['Con qué necesitás ayuda', getRadioValue()],
+        ['Servicio', getSelectValue('servicio')],
+        ['Actividad', getSelectValue('actividad')],
+        ['Ubicación', getSelectValue('ubicacion')],
+        ['Cobranza', cobranza.length ? cobranza.join(', ') : '—'],
+        ['Cuándo', getSelectValue('cuando')],
+        ['Celular', celularInput.value.trim()],
+        ['E-mail', emailInput.value.trim()],
+      ];
+      summaryBox.innerHTML = rows.map(r=>
+        '<div class="row"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>'
+      ).join('');
+
+      form.style.display = 'none';
+      successView.classList.add('show');
+      submitBtn.classList.remove('loading');
+      submitBtn.textContent = 'Enviar consulta';
+    }, 700);
+  });
+
+  resetBtn.addEventListener('click', ()=>{
+    form.reset();
+    document.querySelectorAll('.value').forEach(v=>{
+      v.classList.remove('filled');
+    });
+    document.querySelectorAll('.select-wrap .value').forEach(v=>{});
+    // restore placeholders
+    document.querySelector('.select-wrap[data-select="servicio"] .value').textContent = 'Quiero...';
+    document.querySelector('.select-wrap[data-select="actividad"] .value').textContent = 'Mi actividad es...';
+    document.querySelector('.select-wrap[data-select="ubicacion"] .value').textContent = 'Está en...';
+    document.querySelector('.select-wrap[data-select="cuando"] .value').textContent = 'Quisiera...';
+    document.querySelectorAll('.option-item.active').forEach(o=>o.classList.remove('active'));
+    document.querySelectorAll('.select-box.error').forEach(b=>b.classList.remove('error'));
+    document.querySelectorAll('.check-item.checked').forEach(c=>c.classList.remove('checked'));
+    radios.forEach(x=>x.classList.remove('selected'));
+    document.querySelector('.radio-pill[data-radio="operar"]').classList.add('selected');
+    [celularInput, emailInput].forEach(inp=>markInputError(inp,false));
+
+    successView.classList.remove('show');
+    form.style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+})();
+</script>
+</body>
+</html>
