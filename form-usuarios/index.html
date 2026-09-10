@@ -1,1 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo Formulario B2B / B2C</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.25s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between">
 
+    <nav class="bg-white border-b border-slate-200 py-3.5 px-6 text-xs text-slate-700 font-medium shadow-sm">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <a href="#" class="font-bold text-blue-900 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-blue-600"></i>
+                    PlusPagos
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#" class="hover:text-blue-700 transition-colors">Soluciones para vos <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i></a>
+                    <a href="#" class="hover:text-blue-700 transition-colors">Soluciones para comercios <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i></a>
+                    <a href="#" class="hover:text-blue-700 transition-colors">Soluciones para empresas <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i></a>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="bg-blue-800 hover:bg-blue-900 text-white font-semibold px-4 py-2 rounded-full transition-all text-xs">
+                    Ingresar al Portal Comercios
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-xl mx-auto px-4 py-10 w-full flex-grow flex items-center justify-center">
+        <div class="w-full bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden fade-in">
+            
+            <div class="bg-slate-50 border-b border-slate-100 p-6 sm:p-8 text-center">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Estamos cerca tuyo</h1>
+                <p class="text-xs sm:text-sm text-slate-500 mt-2">Dejanos tus datos y te responderemos a la brevedad.</p>
+                
+                <div class="mt-6 inline-flex p-1 bg-slate-200/80 rounded-full w-full max-w-sm">
+                    <button type="button" onclick="setSegment('empresa')" id="btn-empresa" class="flex-1 py-2.5 px-3 text-xs font-semibold rounded-full transition-all duration-200 bg-white text-blue-900 shadow-sm border border-slate-200">
+                        <i class="fa-solid fa-store mr-1.5"></i>Soy empresa / comercio
+                    </button>
+                    <button type="button" onclick="setSegment('persona')" id="btn-persona" class="flex-1 py-2.5 px-3 text-xs font-semibold rounded-full transition-all duration-200 text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-user mr-1.5"></i>Soy persona
+                    </button>
+                </div>
+            </div>
+
+            <form onsubmit="handleFormSubmit(event)" class="p-6 sm:p-8 space-y-4 text-sm">
+                
+                <div id="block-empresa" class="space-y-4 fade-in">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1.5">¿Con qué necesitás ayuda?</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                            <label class="flex items-center gap-2 p-3 border-2 rounded-xl border-blue-800 bg-blue-50/50 cursor-pointer text-xs font-semibold text-blue-900 shadow-sm transition-all">
+                                <input type="radio" name="b2b_type" value="consulta" checked class="text-blue-700 focus:ring-blue-500">
+                                Quiero hacer una consulta
+                            </label>
+                            <label class="flex items-center gap-2 p-3 border rounded-xl border-slate-200 hover:bg-slate-50 cursor-pointer text-xs font-medium text-slate-700 transition-all">
+                                <input type="radio" name="b2b_type" value="operar" class="text-blue-700 focus:ring-blue-500">
+                                Quiero operar con PlusPagos
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1.5">¿Qué operación realiza tu negocio?</label>
+                        <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all">
+                            <option value="" disabled selected>Cobro de...</option>
+                            <option value="gastronomia">Cobro de servicios / Gastronomía</option>
+                            <option value="retail">Retail / Comercio minorista</option>
+                            <option value="ecommerce">E-commerce / Venta online</option>
+                            <option value="otro">Otro rubro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="block-persona" class="space-y-4 hidden fade-in">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1.5">¿Con qué necesitás ayuda?</label>
+                        <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all">
+                            <option value="" disabled selected>Consulta sobre...</option>
+                            <option value="boton">Pagos en el botón / red PlusPagos</option>
+                            <option value="billetera">Inconveniente con la Billetera PlusPagos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1.5">Nombre y apellido</label>
+                    <input type="text" required placeholder="Ej. María Perez" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1.5">Celular</label>
+                        <input type="tel" required placeholder="Ej.: 1112345678" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1.5">E-mail</label>
+                        <input type="email" required placeholder="Ej. nombre@mail.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1.5">Consulta</label>
+                    <textarea rows="3" required placeholder="Escribí acá tu consulta..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all resize-none"></textarea>
+                </div>
+
+                <div class="text-center pt-3">
+                    <button type="submit" class="w-full sm:w-auto px-10 bg-blue-900 hover:bg-blue-950 text-white font-semibold py-3 rounded-full transition-all shadow-md active:scale-[0.99]">
+                        Enviar consulta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div id="success-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl fade-in">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">¡Consulta recibida!</h3>
+            <p id="modal-message" class="text-xs text-slate-600 leading-relaxed">
+                Derivamos tu ticket automáticamente al equipo especializado. Te responderemos al e-mail ingresado.
+            </p>
+            <button type="button" onclick="closeModal()" class="w-full bg-blue-900 text-white font-medium py-2.5 rounded-xl text-xs hover:bg-blue-950 transition-all">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+        &copy; PlusPagos. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        let currentSegment = 'empresa';
+
+        function setSegment(segment) {
+            currentSegment = segment;
+            const btnPersona = document.getElementById('btn-persona');
+            const btnEmpresa = document.getElementById('btn-empresa');
+            const blockPersona = document.getElementById('block-persona');
+            const blockEmpresa = document.getElementById('block-empresa');
+
+            if (segment === 'persona') {
+                btnPersona.className = "flex-1 py-2.5 px-3 text-xs font-semibold rounded-full transition-all duration-200 bg-white text-blue-900 shadow-sm border border-slate-200";
+                btnEmpresa.className = "flex-1 py-2.5 px-3 text-xs font-semibold rounded-full transition-all duration-200 text-slate-600 hover:text-slate-900";
+                blockPersona.classList.remove('hidden');
+                blockEmpresa.classList.add('hidden');
+            } else {
+                btnEmpresa.className = "flex-1 py-2.5 px-3 text-xs font-semibold rounded-full transition-all duration-200 bg-white text-blue-900 shadow-sm border border-slate-200";
+                btnPersona.className = "flex-1 py-2.5 px-3 text-xs font-semibold rounded-full transition-all duration-200 text-slate-600 hover:text-slate-900";
+                blockEmpresa.classList.remove('hidden');
+                blockPersona.classList.add('hidden');
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const modalMessage = document.getElementById('modal-message');
+            if (currentSegment === 'empresa') {
+                modalMessage.innerText = "Derivamos tu consulta al equipo comercial de empresas y comercios. Un asesor te contactará a la brevedad.";
+            } else {
+                modalMessage.innerText = "Derivamos tu ticket de soporte al equipo de atención a usuarios finales. Te responderemos al e-mail ingresado.";
+            }
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            document.querySelector('form').reset();
+            setSegment('empresa');
+        }
+    </script>
+</body>
+</html>
