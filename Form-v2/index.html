@@ -442,6 +442,41 @@
   /* Espaciado uniforme también dentro de bloques condicionales */
   .pp-form .field-group, .pp-form .field-group:last-of-type{margin-bottom:28px;}
   .pp-form .submit-row{margin-top:4px;}
+
+  /* ---------- Tabs fuera de la card (pastilla blanca) ---------- */
+  .card-shell{width:100%; max-width:624px;}
+  .card-shell .tabs{
+    display:flex; gap:6px;
+    background:var(--pp-card);
+    border-radius:999px;
+    padding:8px;
+    margin:0 auto 22px;
+    max-width:540px;
+    box-shadow:var(--shadow-card);
+  }
+  .card-shell .tabs[hidden]{display:none;}
+  .card-shell .tab{
+    flex:1;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    background:transparent;
+    color:#4A4C57;
+    border-radius:999px;
+    padding:14px 18px;
+    font-size:15.5px; font-weight:600;
+    box-shadow:none;
+  }
+  .card-shell .tab svg{flex-shrink:0;}
+  .card-shell .tab:hover{color:var(--pp-text); background:#F6F7F9;}
+  .card-shell .tab[aria-selected="true"]{
+    background:var(--pp-navy-tint-2);
+    color:var(--pp-navy);
+    font-weight:700;
+    box-shadow:none;
+  }
+  .card-shell .card{max-width:none;}
+  @media (max-width:480px){
+    .card-shell .tab{font-size:14px; padding:12px 10px; gap:7px;}
+  }
 </style>
 </head>
 <body>
@@ -454,12 +489,12 @@
 </section>
 
 <section class="stage">
-  <div class="card">
-
-    <div class="tabs" role="tablist" id="tabs">
-      <button class="tab" role="tab" aria-selected="true" aria-controls="panelEmpresa" data-target="panelEmpresa">Soy empresa</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="panelPersona" data-target="panelPersona" tabindex="-1">Soy persona</button>
-    </div>
+  <div class="card-shell">
+  <div class="tabs" role="tablist" id="tabs">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="panelEmpresa" data-target="panelEmpresa"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9.5V19a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9.5" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M3 8.2 4.6 4.6A1 1 0 0 1 5.5 4h13a1 1 0 0 1 .9.6L21 8.2a2.6 2.6 0 0 1-4.5 1.9 2.6 2.6 0 0 1-4.5 0 2.6 2.6 0 0 1-4.5 0A2.6 2.6 0 0 1 3 8.2Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M9.5 20v-5h5v5" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg><span>Soy empresa</span></button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panelPersona" data-target="panelPersona" tabindex="-1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.9"/><path d="M4.5 20.5c.8-3.6 3.8-6 7.5-6s6.7 2.4 7.5 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span>Soy persona</span></button>
+  </div>
+  <div class="card" id="card">
 
     <div class="tab-panel" id="panelEmpresa" role="tabpanel">
     <form class="pp-form" id="formEmpresa" novalidate data-tab="Soy empresa">
@@ -700,6 +735,7 @@
       <button class="reset-btn" id="resetBtn" type="button">Enviar otra consulta</button>
     </div>
 
+  </div>
   </div>
 </section>
 
